@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Main from "./screens/Main";
 
 interface ComponentProps {
 }
@@ -7,7 +6,7 @@ interface ComponentProps {
 interface ComponentState {
 }
 
-export default class App extends Component<ComponentProps, ComponentState> {
+export default class PageTitle extends Component<ComponentProps, ComponentState> {
 
     constructor(props: ComponentProps) {
         super(props);
@@ -16,8 +15,8 @@ export default class App extends Component<ComponentProps, ComponentState> {
     }
 
     render() {
-        return <div className={"App"}>
-            <Main />
-        </div>;
+        return <h3 className={"PageTitle"}>
+            Code Wars
+        </h3>;
     }
 }
