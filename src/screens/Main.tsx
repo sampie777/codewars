@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import PageTitle from "../components/PageTitle";
+import EditorComponent from "./editor/EditorComponent";
+import DevStatistics from "../components/DevStatistics";
 
 interface ComponentProps {
 }
@@ -18,6 +20,10 @@ export default class Main extends Component<ComponentProps, ComponentState> {
     render() {
         return <div className={"Main"}>
             <PageTitle />
+
+            <DevStatistics />
+
+            <EditorComponent />
         </div>;
     }
 }
