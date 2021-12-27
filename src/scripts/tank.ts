@@ -1,4 +1,8 @@
+import {Game} from "./game";
+
 export interface TankProps {
+    constructor: (game: Game) => TankProps
+
     // User provided
     acceleration?: number
     rotation?: number

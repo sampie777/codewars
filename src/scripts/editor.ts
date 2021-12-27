@@ -3,8 +3,9 @@ import game from "./game";
 
 export const runUserCode = (script: string): string | undefined => {
     try {
-        const constructor = new Function(script + "; return new Tank();");
-        const player = constructor() as TankProps;
+        const clazz = new Function(script + "; return Tank;");
+        const constructor = clazz();
+        const player = new constructor(game) as TankProps;
         game.updatePlayerCode(player);
     } catch (e) {
         console.error("Failed to execute user code:", e);

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './style.sass';
+import game from "../../scripts/game";
 
 interface ComponentProps {
 }
@@ -18,6 +19,7 @@ export default class GameField extends Component<ComponentProps, ComponentState>
     render() {
         return <div className={"GameField"}>
             <h1>Game</h1>
+            <div id={game.gui.htmlElementId}/>
         </div>;
     }
 }

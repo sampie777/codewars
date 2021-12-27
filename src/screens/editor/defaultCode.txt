@@ -1,0 +1,29 @@
+class Tank {
+    constructor(game) {
+        // These values must be updated by you, which will be sent to the server
+        this.acceleration = 0;
+        this.rotation = 0;
+
+        // These values will be updated by the server
+        this.x = 0;
+        this.y = 0;
+        this.size = 0;
+        this.heading = 0;
+    }
+
+    clone(previousObj) {
+        // Every time you submit your code, a new object is created.
+        // This function will be called with +the previous object, so you
+        // can save/copy the values you want to persist.
+        this.acceleration = previousObj.acceleration;
+        this.rotation = previousObj.rotation;
+    }
+
+    render() {
+        console.log("Render");
+    }
+
+    step(step) {
+        console.log("Step ", step);
+    }
+}

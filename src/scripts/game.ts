@@ -1,10 +1,12 @@
 import {TankProps} from "./tank";
 import config from "./config";
+import {GameGui} from "./gamegui";
 
-class Game {
+export class Game {
     player?: TankProps;
     playerIteration = 0;
     stepCount = 0;
+    gui = new GameGui();
     private stepTimer?: number;
     private isStepping = false;
 
@@ -63,7 +65,6 @@ class Game {
             heading: 0,
         }
 
-        console.log("Retrieved player state", state);
         this.player.x = state.x;
         this.player.y = state.y;
         this.player.size = state.size;
@@ -80,7 +81,6 @@ class Game {
             rotation: this.player.rotation,
         }
 
-        console.log("Sending player state", state);
         // todo... upload player state
     }
 }
