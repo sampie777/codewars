@@ -62,7 +62,15 @@ export default class TextEditor extends Component<ComponentProps, ComponentState
     private getInitialCode() {
         return `class Tank {
     constructor() {
+        // These values must be updated by you, which will be sent to the server
         this.acceleration = 0;
+        this.rotation = 0;
+        
+        // These values will be updated by the server
+        this.x = 0;
+        this.y = 0;
+        this.size = 0;
+        this.heading = 0;
     }
 
     clone(previousObj) {
