@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import TextEditor from "./TextEditor";
 import ActionBar from "./ActionBar";
 import {runUserCode} from "../../scripts/editor";
+import './style.sass';
 
 interface ComponentProps {
 }
