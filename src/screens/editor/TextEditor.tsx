@@ -7,6 +7,7 @@ import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/ext-language_tools";
 import "ace-builds/src-noconflict/ext-spellcheck";
 import "ace-builds/src-noconflict/ext-error_marker";
+import Beautify from 'ace-builds/src-noconflict/ext-beautify';
 
 interface ComponentProps {
 }
@@ -43,11 +44,29 @@ export default class TextEditor extends Component<ComponentProps, ComponentState
                 showPrintMargin={true}
                 showGutter={true}
                 highlightActiveLine={true}
-                defaultValue={`class Tank {
-    acceleration = 0;
+                defaultValue={this.getInitialCode()}
+                setOptions={{
+                    enableBasicAutocompletion: true,
+                    enableLiveAutocompletion: true,
+                    enableSnippets: false,
+                    showLineNumbers: true,
+                    tabSize: 4,
+                    // useWorker: false,
+                    spellcheck: true,
+                }}
+                commands={Beautify.commands}
+            />
+        </div>;
+    }
+
+    private getInitialCode() {
+        return `class Tank {
+    constructor() {
+        this.acceleration = 0;
+    }
 
     clone(previousObj) {
-        console.log("Clonging");
+        console.log("Cloning");
         this.acceleration = previousObj.acceleration;
     }
 
@@ -58,17 +77,6 @@ export default class TextEditor extends Component<ComponentProps, ComponentState
     step(step) {
         console.log("Step ", step);
     }
-}`}
-                setOptions={{
-                    enableBasicAutocompletion: true,
-                    enableLiveAutocompletion: true,
-                    enableSnippets: false,
-                    showLineNumbers: true,
-                    tabSize: 2,
-                    // useWorker: false,
-                    spellcheck: true,
-                }}
-            />
-        </div>;
+}`;
     }
 }
