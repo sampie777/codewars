@@ -57,6 +57,7 @@ export default class DevStatistics extends Component<ComponentProps, ComponentSt
             <h4>Stats</h4>
             <p>{this.state.stepsPerSecond} step(s) per second.</p>
             <p>Code iteration: {game.playerIteration}</p>
+            <p>Websocket: {!game.server.isConnected ? "disconnected" : "connected with ID: " + game.server.connectionId}</p>
         </div>;
     }
 }

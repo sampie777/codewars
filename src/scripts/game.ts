@@ -1,12 +1,14 @@
 import {TankProps} from "./tank";
 import config from "./config";
 import {GameGui} from "./gamegui";
+import {Server, ServerMessageType} from "./server";
 
 export class Game {
     player?: TankProps;
     playerIteration = 0;
     stepCount = 0;
     gui = new GameGui();
+    server = new Server();
     private stepTimer?: number;
     private isStepping = false;
 
@@ -77,11 +79,12 @@ export class Game {
         }
 
         const state = {
+            type: ServerMessageType.PLAYER_STATE,
             acceleration: this.player.acceleration,
             rotation: this.player.rotation,
         }
 
-        // todo... upload player state
+        this.server.send(state);
     }
 }
 
