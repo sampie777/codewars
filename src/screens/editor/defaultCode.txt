@@ -9,6 +9,8 @@ class Tank {
         this.y = 0;
         this.size = 0;
         this.heading = 0;
+
+        window.onkeyup = (e) => console.log(e.code);
     }
 
     clone(previousObj) {
@@ -20,10 +22,10 @@ class Tank {
     }
 
     render() {
-        console.log("Render");
+        // Render your own GUI here
     }
 
     step(step) {
-        console.log("Step ", step);
+        // Determine new acceleration and rotation values here
     }
 }

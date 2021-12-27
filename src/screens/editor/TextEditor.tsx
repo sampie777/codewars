@@ -44,8 +44,16 @@ export default class TextEditor extends Component<ComponentProps, ComponentState
         return this.textAreaRef.current?.editor.getValue() || "";
     }
 
+    private cancelKeyEventsPropagation(e: React.KeyboardEvent) {
+        e.stopPropagation();
+    }
+
     render() {
-        return <div className={"TextEditor"}>
+        return <div className={"TextEditor"}
+                    onKeyUp={this.cancelKeyEventsPropagation}
+                    onKeyDown={this.cancelKeyEventsPropagation}
+                    onKeyPress={this.cancelKeyEventsPropagation}
+        >
             {this.state.defaultValue === undefined ? undefined :
                 <AceEditor
                     ref={this.textAreaRef}
@@ -53,7 +61,7 @@ export default class TextEditor extends Component<ComponentProps, ComponentState
                     theme="monokai"
                     name="AceEditor"
                     width="100%"
-                    height="529px"
+                    height="629px"
                     fontSize={14}
                     showPrintMargin={true}
                     showGutter={true}
