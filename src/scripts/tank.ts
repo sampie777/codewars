@@ -1,13 +1,12 @@
 import {Game} from "./game";
 
 export interface TankProps {
-    constructor: (game: Game) => TankProps
+    constructor: (game: Game, previousTank?: TankProps) => TankProps
 
     // User provided
     acceleration?: number
     rotation?: number
 
-    clone?: (previousObj: Object) => void
     render?: () => void
     step?: (step: number) => void
 

@@ -5,7 +5,7 @@ export const runUserCode = (script: string): string | undefined => {
     try {
         const clazz = new Function(script + "; return Tank;");
         const constructor = clazz();
-        const player = new constructor(game) as TankProps;
+        const player = new constructor(game, game.player) as TankProps;
         game.updatePlayerCode(player);
     } catch (e) {
         console.error("Failed to execute user code:", e);

@@ -1,8 +1,17 @@
 class Tank {
-    constructor(game) {
+    constructor(game, previousTank) {
+        // Every time you submit your code, a new object is created.
+        // The previous object is passed through the constructor as `previousTank`
+        // so you can save/copy the values you want to persist.
+
         // These values must be updated by you, which will be sent to the server
         this.acceleration = 0;
         this.rotation = 0;
+
+        if (previousTank !== undefined) {
+            this.acceleration = previousTank.acceleration;
+            this.rotation = previousTank.rotation;
+        }
 
         // These values will be updated by the server
         this.x = 0;
@@ -11,14 +20,6 @@ class Tank {
         this.heading = 0;
 
         window.onkeyup = (e) => console.log(e.code);
-    }
-
-    clone(previousObj) {
-        // Every time you submit your code, a new object is created.
-        // This function will be called with +the previous object, so you
-        // can save/copy the values you want to persist.
-        this.acceleration = previousObj.acceleration;
-        this.rotation = previousObj.rotation;
     }
 
     render() {

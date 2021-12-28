@@ -43,15 +43,6 @@ export class Game {
     }
 
     updatePlayerCode(newPlayer: TankProps) {
-        if (this.player !== undefined) {
-            try {
-                newPlayer.clone?.(this.player);
-            } catch (e) {
-                console.error("Failed to clone player", e);
-                return;
-            }
-        }
-
         this.player = newPlayer;
         this.playerIteration++;
     }
