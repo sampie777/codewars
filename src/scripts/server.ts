@@ -34,6 +34,11 @@ export class Server {
             console.log("[ws] Socket opened");
             this.isConnected = true;
             this.isConnecting = false;
+
+            this.send({
+                type: ServerMessageType.IDENTIFY,
+                id: this.connectionId === undefined ? null : this.connectionId,
+            })
         }
         this.socket.onmessage = (e) => {
             this.isConnected = true;
