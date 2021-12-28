@@ -5,9 +5,20 @@ export interface PlayerState extends ServerMessage {
     rotation?: number
 }
 
-export interface GameState extends ServerMessage {
+export interface GameStatePlayer {
+    id: number
+    name: string
     x: number
     y: number
     size: number
     heading: number
+}
+
+export interface GameState extends ServerMessage {
+    name: string
+    x: number
+    y: number
+    size: number
+    heading: number
+    players: Array<GameStatePlayer>
 }
