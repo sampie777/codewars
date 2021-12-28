@@ -7,7 +7,9 @@ export class Server {
     isConnecting = false;
     connectionId?: number;
     lastGameState?: GameState;
+    ping: number = 999;
     private socket?: WebSocket;
+    private packetSendStartTime?: Date;
 
     constructor() {
         this.reconnect();
@@ -60,10 +62,20 @@ export class Server {
                 break;
             case ServerMessageType.GAME_STATE:
                 this.lastGameState = msg as GameState;
+                this.calculatePing();
                 break;
             default:
                 console.log("[ws] Unhandled message received:", msg);
         }
+    }
+
+    private calculatePing() {
+        if (this.packetSendStartTime === undefined) {
+            return;
+        }
+
+        this.ping = (new Date()).getTime() - this.packetSendStartTime?.getTime();
+        this.packetSendStartTime = undefined;
     }
 
     send(data: any) {
@@ -73,6 +85,7 @@ export class Server {
         }
 
         const stringValue = JSON.stringify(data);
+        this.packetSendStartTime = new Date();
         this.socket?.send(stringValue);
     }
 }
