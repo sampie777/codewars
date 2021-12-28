@@ -1,6 +1,7 @@
 import {Renderer} from "./Renderer";
 import game from "../game";
 import {GameStatePlayer} from "../objects/states";
+import {degToRad} from "./utils";
 
 export default class TopViewCamera implements Renderer {
     private width: number = 0;
@@ -60,10 +61,16 @@ export default class TopViewCamera implements Renderer {
             return;
         }
 
-        this.context!.fillStyle = "#d44";
         this.context!.beginPath();
-        this.context!.arc(player.x || 0, player.y || 0, player.size || 0,
+        this.context!.fillStyle = "#d44";
+        this.context!.arc(player.x || 0, player.y || 0, (player.size || 0) / 2,
             0, 2 * Math.PI);
+        this.context!.fill();
+
+        this.context!.beginPath();
+        this.context!.fillStyle = "#400";
+        this.context!.arc(player.x || 0, player.y || 0, (player.size || 0) / 2,
+            degToRad((player.heading || 0) - 65), degToRad((player.heading || 0) + 65));
         this.context!.fill();
     }
 
@@ -72,10 +79,16 @@ export default class TopViewCamera implements Renderer {
             return;
         }
 
-        this.context!.fillStyle = "#0a0";
         this.context!.beginPath();
-        this.context!.arc(game.player.x || 0, game.player.y || 0, game.player.size || 0,
+        this.context!.fillStyle = "#0a0";
+        this.context!.arc(game.player.x || 0, game.player.y || 0, (game.player.size || 0) / 2,
             0, 2 * Math.PI);
+        this.context!.fill();
+
+        this.context!.beginPath();
+        this.context!.fillStyle = "#050";
+        this.context!.arc(game.player.x || 0, game.player.y || 0, (game.player.size || 0) / 2,
+            degToRad((game.player.heading || 0) - 65 - 90), degToRad((game.player.heading || 0) + 65 - 90));
         this.context!.fill();
     }
 }
