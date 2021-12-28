@@ -1,18 +1,12 @@
 import config from "./config";
-
-export enum ServerMessageType {
-    IDENTIFY = "IDENTIFY",
-    PLAYER_STATE = "PLAYER_STATE",
-}
-
-export interface ServerMessage {
-    type: ServerMessageType
-}
+import {GameState} from "./objects/states";
+import {ServerMessage, ServerMessageType} from "./objects/servermessages";
 
 export class Server {
     isConnected = false;
     isConnecting = false;
     connectionId?: number;
+    lastGameState?: GameState;
     private socket?: WebSocket;
 
     constructor() {
@@ -56,6 +50,9 @@ export class Server {
                 this.connectionId = msg.id;
                 console.log("[ws] I'm identified as " + this.connectionId);
                 break;
+            case ServerMessageType.GAME_STATE:
+                this.lastGameState = msg as GameState;
+                break;
             default:
                 console.log("[ws] Unhandled message received:", msg);
         }
@@ -63,12 +60,10 @@ export class Server {
 
     send(data: any) {
         if (!this.isConnected) {
-            console.warn("[ws] Not connected");
             this.reconnect();
             return;
         }
 
-        console.log("Sending", data);
         const stringValue = JSON.stringify(data);
         this.socket?.send(stringValue);
     }

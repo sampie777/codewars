@@ -1,7 +1,9 @@
 import {TankProps} from "./tank";
 import config from "./config";
 import {GameGui} from "./gamegui";
-import {Server, ServerMessageType} from "./server";
+import {Server} from "./server";
+import {PlayerState} from "./objects/states";
+import {ServerMessageType} from "./objects/servermessages";
 
 export class Game {
     player?: TankProps;
@@ -59,13 +61,11 @@ export class Game {
             return;
         }
 
-        // todo... download player state
-        const state = {
-            x: 0,
-            y: 0,
-            size: 0,
-            heading: 0,
+        if (this.server.lastGameState === undefined) {
+            return;
         }
+
+        const state = this.server.lastGameState;
 
         this.player.x = state.x;
         this.player.y = state.y;
@@ -78,7 +78,7 @@ export class Game {
             return;
         }
 
-        const state = {
+        const state: PlayerState = {
             type: ServerMessageType.PLAYER_STATE,
             acceleration: this.player.acceleration,
             rotation: this.player.rotation,
