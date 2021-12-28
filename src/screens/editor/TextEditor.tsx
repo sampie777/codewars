@@ -15,7 +15,6 @@ interface ComponentProps {
 }
 
 interface ComponentState {
-    defaultValue?: string
 }
 
 export default class TextEditor extends Component<ComponentProps, ComponentState> {
@@ -34,9 +33,8 @@ export default class TextEditor extends Component<ComponentProps, ComponentState
         fetch(defaultCodeFile)
             .then(r => r.text())
             .then(text => {
-                this.setState({
-                    defaultValue: text
-                })
+                this.textAreaRef.current?.editor.setValue(text);
+                this.textAreaRef.current?.editor.clearSelection();
             });
     }
 
@@ -52,33 +50,30 @@ export default class TextEditor extends Component<ComponentProps, ComponentState
         return <div className={"TextEditor"}
                     onKeyUp={this.cancelKeyEventsPropagation}
                     onKeyDown={this.cancelKeyEventsPropagation}
-                    onKeyPress={this.cancelKeyEventsPropagation}
-        >
-            {this.state.defaultValue === undefined ? undefined :
-                <AceEditor
-                    ref={this.textAreaRef}
-                    mode="javascript"
-                    theme="monokai"
-                    name="AceEditor"
-                    width="100%"
-                    height="629px"
-                    fontSize={14}
-                    showPrintMargin={true}
-                    showGutter={true}
-                    highlightActiveLine={true}
-                    defaultValue={this.state.defaultValue}
-                    setOptions={{
-                        enableBasicAutocompletion: true,
-                        enableLiveAutocompletion: true,
-                        enableSnippets: false,
-                        showLineNumbers: true,
-                        tabSize: 4,
-                        // useWorker: false,
-                        spellcheck: true,
-                    }}
-                    commands={Beautify.commands}
-                />
-            }
+                    onKeyPress={this.cancelKeyEventsPropagation}>
+            <AceEditor
+                ref={this.textAreaRef}
+                mode="javascript"
+                theme="monokai"
+                name="AceEditor"
+                width="100%"
+                height="629px"
+                fontSize={14}
+                showPrintMargin={true}
+                showGutter={true}
+                highlightActiveLine={true}
+                defaultValue={""}
+                setOptions={{
+                    enableBasicAutocompletion: true,
+                    enableLiveAutocompletion: true,
+                    enableSnippets: false,
+                    showLineNumbers: true,
+                    tabSize: 4,
+                    // useWorker: false,
+                    spellcheck: true,
+                }}
+                commands={Beautify.commands}
+            />
         </div>;
     }
 }
