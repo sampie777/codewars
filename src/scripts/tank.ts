@@ -1,10 +1,8 @@
-import {Game} from "./game";
-
 export interface TankProps {
     // constructor: (game: Game, previousTank?: TankProps) => any
 
     // User provided
-    acceleration?: number
+    appliedForce?: number
     rotation?: number
 
     render?: () => void
@@ -18,18 +16,10 @@ export interface TankProps {
 }
 
 export class EmptyTank implements TankProps {
-    acceleration = 0;
+    appliedForce = 0;
     rotation = 0;
     x = 0
     y = 0
     size = 0
     heading = 0
-
-    render() {
-        // Render your own GUI here
-    }
-
-    step(step: number) {
-        // Determine new acceleration and rotation values here
-    }
 }

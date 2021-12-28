@@ -1,7 +1,7 @@
 import {ServerMessage} from "./servermessages";
 
 export interface PlayerState extends ServerMessage {
-    acceleration?: number
+    appliedForce?: number
     rotation?: number
 }
 

@@ -74,7 +74,7 @@ export class Game {
 
         const state: PlayerState = {
             type: ServerMessageType.PLAYER_STATE,
-            acceleration: this.player.acceleration,
+            appliedForce: this.player.appliedForce,
             rotation: this.player.rotation,
         }
 
