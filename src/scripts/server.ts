@@ -19,6 +19,10 @@ export class Server {
         }
 
         this.isConnecting = true;
+        if (this.socket !== undefined) {
+            this.socket.close();
+        }
+
         this.socket = new WebSocket(config.serverUrl);
 
         this.socket.onerror = (e) => {
@@ -53,7 +57,6 @@ export class Server {
         switch (msg.type) {
             case ServerMessageType.IDENTIFY:
                 this.connectionId = msg.id;
-                console.log("[ws] I'm identified as " + this.connectionId);
                 break;
             case ServerMessageType.GAME_STATE:
                 this.lastGameState = msg as GameState;

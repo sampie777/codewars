@@ -53,11 +53,19 @@ export default class DevStatistics extends Component<ComponentProps, ComponentSt
     }
 
     render() {
+        let connectionMessage = "disconnected";
+        if (game.server.isConnected) {
+            connectionMessage = "connected with ID: " + game.server.connectionId;
+        } else if (game.server.isConnecting) {
+            connectionMessage = "connecting...";
+        }
+
         return <div className={"DevStatistics"}>
             <h4>Stats</h4>
             <p>{this.state.stepsPerSecond} step(s) per second.</p>
             <p>Code iteration: {game.playerIteration}</p>
-            <p>Websocket: {!game.server.isConnected ? "disconnected" : "connected with ID: " + game.server.connectionId}</p>
+            <p>Websocket: {connectionMessage}</p>
+            <p>Other players: {game.server.lastGameState?.players.length || 0}</p>
         </div>;
     }
 }
