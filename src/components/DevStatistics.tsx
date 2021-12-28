@@ -7,6 +7,8 @@ interface ComponentProps {
 interface ComponentState {
     stepsPerSecond: number
     lastTotalSteps: number
+    framesPerSecond: number
+    lastTotalFrames: number
 }
 
 export default class DevStatistics extends Component<ComponentProps, ComponentState> {
@@ -19,6 +21,8 @@ export default class DevStatistics extends Component<ComponentProps, ComponentSt
         this.state = {
             stepsPerSecond: 0,
             lastTotalSteps: 0,
+            framesPerSecond: 0,
+            lastTotalFrames: 0,
         };
 
         this.startTimer = this.startTimer.bind(this);
@@ -49,6 +53,8 @@ export default class DevStatistics extends Component<ComponentProps, ComponentSt
         this.setState({
             stepsPerSecond: game.stepCount - this.state.lastTotalSteps,
             lastTotalSteps: game.stepCount,
+            framesPerSecond: game.graphics.framesPainted - this.state.lastTotalFrames,
+            lastTotalFrames: game.graphics.framesPainted,
         });
     }
 
@@ -63,6 +69,7 @@ export default class DevStatistics extends Component<ComponentProps, ComponentSt
         return <div className={"DevStatistics"}>
             <h4>Stats</h4>
             <p>{this.state.stepsPerSecond} step(s) per second.</p>
+            <p>{this.state.framesPerSecond} frame(s) per second.</p>
             <p>Code iteration: {game.playerIteration}</p>
             <p>Websocket: {connectionMessage}</p>
             <p>Other players: {game.server.lastGameState?.players.length || 0}</p>

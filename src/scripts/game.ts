@@ -1,6 +1,6 @@
 import {TankProps} from "./tank";
 import config from "./config";
-import {GameGui} from "./gamegui";
+import {Graphics} from "./graphics";
 import {Server} from "./server";
 import {PlayerState} from "./objects/states";
 import {ServerMessageType} from "./objects/servermessages";
@@ -9,7 +9,7 @@ export class Game {
     player?: TankProps;
     playerIteration = 0;
     stepCount = 0;
-    gui = new GameGui();
+    graphics = new Graphics(this);
     server = new Server();
     private stepTimer?: number;
     private isStepping = false;
