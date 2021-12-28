@@ -1,5 +1,5 @@
 const config = {
-    stepsPerSecond: 1,
+    stepsPerSecond: 10,
     serverUrl: "ws://localhost:8080/ws/echo",
 };
 

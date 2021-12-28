@@ -1,15 +1,15 @@
-import {TankProps} from "./tank";
+import {EmptyTank, TankProps} from "./tank";
 import config from "./config";
-import {Graphics} from "./graphics";
+import {Graphics} from "./graphics/graphics";
 import {Server} from "./server";
 import {PlayerState} from "./objects/states";
 import {ServerMessageType} from "./objects/servermessages";
 
 export class Game {
-    player?: TankProps;
+    player: TankProps = new EmptyTank();
     playerIteration = 0;
     stepCount = 0;
-    graphics = new Graphics(this);
+    graphics = new Graphics();
     server = new Server();
     private stepTimer?: number;
     private isStepping = false;
@@ -19,6 +19,8 @@ export class Game {
             window.clearTimeout(this.stepTimer);
         }
         this.stepTimer = window.setInterval(this._step.bind(this), 1000 / config.stepsPerSecond);
+
+        this.graphics.init();
     }
 
     private _step() {
@@ -81,6 +83,4 @@ export class Game {
 }
 
 const game = new Game();
-game.start();
-
 export default game;

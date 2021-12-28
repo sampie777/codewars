@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Main from "./screens/Main";
 import './App.sass';
+import game from "./scripts/game";
 
 interface ComponentProps {
 }
@@ -14,6 +15,11 @@ export default class App extends Component<ComponentProps, ComponentState> {
         super(props);
 
         this.state = {};
+    }
+
+    componentDidMount() {
+        // Start the game with a small timeout to let the page initialize first
+        setTimeout(() => game.start(), 100);
     }
 
     render() {

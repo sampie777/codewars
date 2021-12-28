@@ -1,12 +1,14 @@
-import {Game} from "./game";
+import game from "../game";
+import TopViewCamera from "./TopViewCamera";
+import {Renderer} from "./Renderer";
 
 export class Graphics {
     htmlElementId = "game";
     framesPainted = 0;
-    private game: Game;
+    private renderer: Renderer = new TopViewCamera();
 
-    constructor(game: Game) {
-        this.game = game;
+    init() {
+        this.renderer.init();
         this._prepareNextStep();
     }
 
@@ -19,11 +21,14 @@ export class Graphics {
     }
 
     renderStep() {
+        this.renderer.step();
+
         try {
-            this.game.player?.render?.();
+            game.player?.render?.();
         } catch (e) {
             console.error("Failed to call render() on player", e);
         }
+
         this.framesPainted++;
         this._prepareNextStep();
     }

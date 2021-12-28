@@ -17,10 +17,10 @@ export default class GameField extends Component<ComponentProps, ComponentState>
     }
 
     render() {
-        return <div className={"GameField"}
-                    id={game.graphics.htmlElementId}
-                    tabIndex={0}>
-            <h1>Game</h1>
+        return <div className={"GameField"}>
+            <div className={"game"}
+                 id={game.graphics.htmlElementId}
+                 tabIndex={0}/>
         </div>;
     }
 }
