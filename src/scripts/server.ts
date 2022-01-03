@@ -1,6 +1,8 @@
 import config from "./config";
 import {GameState} from "./objects/states";
 import {ServerMessage, ServerMessageType} from "./objects/servermessages";
+import game from "./game";
+import {GameConfiguration} from "./objects/gameConfiguration";
 
 export class Server {
     isConnected = false;
@@ -65,6 +67,10 @@ export class Server {
             case ServerMessageType.GAME_STATE:
                 this.lastGameState = msg as GameState;
                 this.calculatePing();
+                break;
+            case ServerMessageType.GAME_CONFIGURATION:
+                const configuration = msg as GameConfiguration;
+                game.setConfiguration(configuration)
                 break;
             default:
                 console.log("[ws] Unhandled message received:", msg);

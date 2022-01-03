@@ -4,13 +4,17 @@ import {Graphics} from "./graphics/graphics";
 import {Server} from "./server";
 import {PlayerState} from "./objects/states";
 import {ServerMessageType} from "./objects/servermessages";
+import {GameConfiguration} from "./objects/gameConfiguration";
 
 export class Game {
-    player: TankProps = new EmptyTank();
-    playerIteration = 0;
-    stepCount = 0;
+    configuration = new GameConfiguration();
     graphics = new Graphics();
     server = new Server();
+
+    stepCount = 0;
+    playerIteration = 0;
+    player: TankProps = new EmptyTank();
+
     private stepTimer?: number;
     private isStepping = false;
 
@@ -85,6 +89,17 @@ export class Game {
         }
 
         this.server.send(state);
+    }
+
+    setConfiguration(configuration: GameConfiguration) {
+        this.configuration = configuration;
+        this.resetGraphics();
+    }
+
+    private resetGraphics() {
+        this.graphics.destroy();
+        this.graphics = new Graphics();
+        this.graphics.init();
     }
 }
 

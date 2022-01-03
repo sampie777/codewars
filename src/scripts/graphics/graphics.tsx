@@ -6,14 +6,32 @@ export class Graphics {
     htmlElementId = "game";
     framesPainted = 0;
     private renderer: Renderer = new TopViewCamera();
+    private destroyed = false;
 
     init() {
+        const htmlElement = this.getHtmlElement();
+        if (htmlElement != null) {
+            htmlElement.innerHTML = "";
+            htmlElement.style.width = game.configuration.mapWidth + "px";
+            htmlElement.style.height = game.configuration.mapHeight + "px";
+        }
+
         try {
             this.renderer.init();
         } catch (e) {
             console.error("Failed to init renderer", e);
         }
+
         this._prepareNextStep();
+    }
+
+    destroy() {
+        this.destroyed = true;
+        try {
+            this.renderer.onDestroy?.();
+        } catch (e) {
+            console.error("Error while destroying renderer", e);
+        }
     }
 
     getHtmlElement(): HTMLElement | null {
@@ -25,6 +43,10 @@ export class Graphics {
     }
 
     renderStep() {
+        if (this.destroyed) {
+            return;
+        }
+
         try {
             this.renderer.step();
         } catch (e) {
