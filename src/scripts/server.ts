@@ -32,7 +32,9 @@ export class Server {
             this.isConnecting = false;
         }
         this.socket.onclose = (e) => {
-            console.log("[ws] Socket closed", e);
+            if (this.isConnected || this.isConnecting) {
+                console.log("[ws] Socket closed", e);
+            }
             this.isConnected = false;
             this.isConnecting = false;
         }
