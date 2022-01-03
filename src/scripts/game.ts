@@ -28,6 +28,12 @@ export class Game {
             console.warn("Step takes too long!");
             return;
         }
+        if (!this.server.isConnected) {
+            // Why bother taking steps when not connected?
+            this.server.reconnect();
+            return;
+        }
+
         this.isStepping = true;
 
         this.retrievePlayerState();
