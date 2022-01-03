@@ -45,6 +45,7 @@ export default class TopViewCamera implements Renderer {
         }
         this.clear();
         this.paintPlayers();
+        this.paintStatistics();
     }
 
     clear() {
@@ -90,5 +91,19 @@ export default class TopViewCamera implements Renderer {
         this.context!.arc(game.player.x || 0, game.player.y || 0, (game.player.size || 0) / 2,
             degToRad((game.player.heading || 0) - 65 - 90), degToRad((game.player.heading || 0) + 65 - 90));
         this.context!.fill();
+    }
+
+    paintStatistics() {
+        try {
+            this.context!.beginPath();
+            this.context!.strokeStyle = "#fff";
+            this.context!.font = "14px monospace";
+            this.context!.textBaseline = "top";
+            this.context!.textAlign = "left";
+            // @ts-ignore
+            const velocity = game.player.getVelocity();
+            this.context!.strokeText("Velocity: " + Math.round(velocity * 10) / 10, this.width - 150, 10);
+        } catch (e) {
+        }
     }
 }
