@@ -15,10 +15,6 @@ export interface GameStatePlayer {
 }
 
 export interface GameState extends ServerMessage {
-    name: string
-    x: number
-    y: number
-    size: number
-    heading: number
+    player: GameStatePlayer
     players: Array<GameStatePlayer>
 }

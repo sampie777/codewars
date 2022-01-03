@@ -66,10 +66,10 @@ export class Game {
 
         const state = this.server.lastGameState;
 
-        this.player.x = state.x;
-        this.player.y = state.y;
-        this.player.size = state.size;
-        this.player.heading = state.heading;
+        this.player.x = state.player.x;
+        this.player.y = state.player.y;
+        this.player.size = state.player.size;
+        this.player.heading = state.player.heading;
     }
 
     sendPlayerState() {
