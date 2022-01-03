@@ -8,7 +8,11 @@ export class Graphics {
     private renderer: Renderer = new TopViewCamera();
 
     init() {
-        this.renderer.init();
+        try {
+            this.renderer.init();
+        } catch (e) {
+            console.error("Failed to init renderer", e);
+        }
         this._prepareNextStep();
     }
 
@@ -21,7 +25,11 @@ export class Graphics {
     }
 
     renderStep() {
-        this.renderer.step();
+        try {
+            this.renderer.step();
+        } catch (e) {
+            console.error("Failed to call render() on renderer", e);
+        }
 
         try {
             game.player?.render?.();
