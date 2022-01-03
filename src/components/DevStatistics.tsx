@@ -72,7 +72,7 @@ export default class DevStatistics extends Component<ComponentProps, ComponentSt
             <p>{this.state.stepsPerSecond} step(s) per second.</p>
             <p>{this.state.framesPerSecond} frame(s) per second.</p>
             <p>Code iteration: {game.playerIteration}</p>
-            <p>Websocket: {connectionMessage} (ping: {game.server.ping} ms)</p>
+            <p>Websocket: {connectionMessage} {!game.server.isConnected ? undefined : <>(ping: {game.server.ping} ms)</>}</p>
             <p>Other players: {game.server.lastGameState?.players.length || 0}</p>
         </div>;
     }
