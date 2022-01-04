@@ -26,7 +26,7 @@ export default class DevStatistics extends Component<ComponentProps, ComponentSt
             lastTotalSteps: 0,
             framesPerSecond: 0,
             lastTotalFrames: 0,
-            useSecureConnection: false,
+            useSecureConnection: config.serverUseSecureConnection,
         };
 
         this.startTimer = this.startTimer.bind(this);
@@ -67,11 +67,7 @@ export default class DevStatistics extends Component<ComponentProps, ComponentSt
         this.setState({
             useSecureConnection: e.target.checked
         }, () => {
-            if (this.state.useSecureConnection) {
-                config.serverUrl = config.serverUrl.replace(new RegExp("^ws://"), "wss://")
-            } else {
-                config.serverUrl = config.serverUrl.replace(new RegExp("^wss://"), "ws://")
-            }
+            config.serverUseSecureConnection = this.state.useSecureConnection;
             game.server.reconnect();
         });
     }

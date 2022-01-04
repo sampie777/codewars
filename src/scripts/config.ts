@@ -10,6 +10,7 @@ const config = {
         serverUrl.production :
         (window.location.hostname === "localhost") ?
             serverUrl.localhost : serverUrl.other,
+    serverUseSecureConnection: window.location.protocol === "https:",
     socketWaitTillClosedTimeout: 5000,
 };
 

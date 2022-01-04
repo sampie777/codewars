@@ -29,7 +29,7 @@ export class Server {
             return;
         }
 
-        this.socket = new WebSocket(config.serverUrl);
+        this.socket = new WebSocket(this.generateServerUrl());
 
         this.socket.onerror = (e) => {
             console.error("[ws] Socket error", e);
@@ -62,12 +62,19 @@ export class Server {
         }
     }
 
+    private generateServerUrl(): string {
+        if (config.serverUseSecureConnection) {
+            return config.serverUrl.replace(new RegExp("^ws://"), "wss://")
+        }
+        return config.serverUrl.replace(new RegExp("^wss://"), "ws://")
+    }
+
     private waitTillClosed(callback: () => void, timeoutTime: Date | undefined = undefined) {
         if (timeoutTime === undefined) {
             timeoutTime = new Date((new Date()).getTime() + config.socketWaitTillClosedTimeout);
         }
 
-        if((this.isConnected || this.socket !== undefined) && timeoutTime.getTime() > (new Date()).getTime()) {
+        if ((this.isConnected || this.socket !== undefined) && timeoutTime.getTime() > (new Date()).getTime()) {
             return callback();
         }
 
