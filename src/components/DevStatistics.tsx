@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import game from "../scripts/game";
 import './DevStatistics.sass';
+import config from "../scripts/config";
 
 interface ComponentProps {
 }
@@ -10,6 +11,7 @@ interface ComponentState {
     lastTotalSteps: number
     framesPerSecond: number
     lastTotalFrames: number
+    useSecureConnection: boolean
 }
 
 export default class DevStatistics extends Component<ComponentProps, ComponentState> {
@@ -24,11 +26,13 @@ export default class DevStatistics extends Component<ComponentProps, ComponentSt
             lastTotalSteps: 0,
             framesPerSecond: 0,
             lastTotalFrames: 0,
+            useSecureConnection: false,
         };
 
         this.startTimer = this.startTimer.bind(this);
         this.clearTimer = this.clearTimer.bind(this);
         this.checkTimer = this.checkTimer.bind(this);
+        this.toggleSecureConnection = this.toggleSecureConnection.bind(this);
     }
 
     componentDidMount() {
@@ -59,6 +63,19 @@ export default class DevStatistics extends Component<ComponentProps, ComponentSt
         });
     }
 
+    toggleSecureConnection(e: React.ChangeEvent<HTMLInputElement>) {
+        this.setState({
+            useSecureConnection: e.target.checked
+        }, () => {
+            if (this.state.useSecureConnection) {
+                config.serverUrl = config.serverUrl.replace(new RegExp("^ws://"), "wss://")
+            } else {
+                config.serverUrl = config.serverUrl.replace(new RegExp("^wss://"), "ws://")
+            }
+            game.server.reconnect();
+        });
+    }
+
     render() {
         let connectionMessage = "disconnected";
         if (game.server.isConnected) {
@@ -72,7 +89,18 @@ export default class DevStatistics extends Component<ComponentProps, ComponentSt
             <p>{this.state.stepsPerSecond} step(s) per second.</p>
             <p>{this.state.framesPerSecond} frame(s) per second.</p>
             <p>Code iteration: {game.playerIteration}</p>
-            <p>Websocket: {connectionMessage} {!game.server.isConnected ? undefined : <>(ping: {game.server.ping} ms)</>}</p>
+            <p>
+                Websocket&nbsp;
+                (
+                <label>
+                    <input type={"checkbox"}
+                           onChange={this.toggleSecureConnection}
+                           checked={this.state.useSecureConnection}/>
+                    SSL
+                </label>
+                ):&nbsp;
+                {connectionMessage} {!game.server.isConnected ? undefined : <>(ping: {game.server.ping} ms)</>}
+            </p>
             <p>Other players: {game.server.lastGameState?.players.length || 0}</p>
         </div>;
     }

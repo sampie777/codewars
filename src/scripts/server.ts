@@ -25,6 +25,8 @@ export class Server {
         this.isConnecting = true;
         if (this.socket !== undefined) {
             this.socket.close();
+            this.waitTillClosed(() => this.reconnect());
+            return;
         }
 
         this.socket = new WebSocket(config.serverUrl);
@@ -39,6 +41,7 @@ export class Server {
             }
             this.isConnected = false;
             this.isConnecting = false;
+            this.socket = undefined;
         }
         this.socket.onopen = () => {
             console.log("[ws] Socket opened");
@@ -57,6 +60,18 @@ export class Server {
             const msg = JSON.parse(e.data) as ServerMessage & any;
             this.handleMessage(msg);
         }
+    }
+
+    private waitTillClosed(callback: () => void, timeoutTime: Date | undefined = undefined) {
+        if (timeoutTime === undefined) {
+            timeoutTime = new Date((new Date()).getTime() + config.socketWaitTillClosedTimeout);
+        }
+
+        if((this.isConnected || this.socket !== undefined) && timeoutTime.getTime() > (new Date()).getTime()) {
+            return callback();
+        }
+
+        setTimeout(() => this.waitTillClosed(callback, timeoutTime), 100);
     }
 
     private handleMessage(msg: ServerMessage & any) {
