@@ -51,7 +51,7 @@ function pushAndRelease {
   git add package.json || exit 1
   git commit -m "version release" || exit 1
   git tag "v${RELEASE_VERSION}" || exit 1
-#  git push -u origin master --tags || exit 1
+  git push -u origin master --tags || exit 1
 
   ./docker.sh build || exit 1
   ./docker.sh push || exit 1
@@ -70,7 +70,7 @@ function setNextDevelopmentVersion {
 
   git add package.json || exit 1
   git commit -m "next development version" || exit 1
-#  git push -u origin develop --tags || exit 1
+  git push -u origin develop --tags || exit 1
 }
 
 command="$1"
