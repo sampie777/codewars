@@ -1,6 +1,6 @@
 {
   "name": "codewars",
-  "version": "0.0.0-SNAPSHOT",
+  "version": "0.0.0",
   "private": true,
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.1",
