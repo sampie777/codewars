@@ -12,7 +12,7 @@ export interface TankProps {
     x?: number
     y?: number
     size?: number
-    heading?: number
+    orientation?: number
 }
 
 export class EmptyTank implements TankProps {
@@ -21,5 +21,5 @@ export class EmptyTank implements TankProps {
     x = 0
     y = 0
     size = 0
-    heading = 0
+    orientation = 0
 }

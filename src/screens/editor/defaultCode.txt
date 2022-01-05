@@ -16,7 +16,7 @@ class Tank {
         this.x = 0;
         this.y = 0;
         this.size = 0;
-        this.heading = 0;
+        this.orientation = 0;
 
         window.onkeydown = (e) => {
             if (e.code == "ArrowUp") {

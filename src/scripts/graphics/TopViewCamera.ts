@@ -71,7 +71,7 @@ export default class TopViewCamera implements Renderer {
         this.context!.beginPath();
         this.context!.fillStyle = "#400";
         this.context!.arc(player.x || 0, player.y || 0, (player.size || 0) / 2,
-            degToRad((player.heading || 0) - 65), degToRad((player.heading || 0) + 65));
+            degToRad((player.orientation || 0) - 65), degToRad((player.orientation || 0) + 65));
         this.context!.fill();
     }
 
@@ -89,7 +89,7 @@ export default class TopViewCamera implements Renderer {
         this.context!.beginPath();
         this.context!.fillStyle = "#050";
         this.context!.arc(game.player.x || 0, game.player.y || 0, (game.player.size || 0) / 2,
-            degToRad((game.player.heading || 0) - 65 - 90), degToRad((game.player.heading || 0) + 65 - 90));
+            degToRad((game.player.orientation || 0) - 65 - 90), degToRad((game.player.orientation || 0) + 65 - 90));
         this.context!.fill();
     }
 

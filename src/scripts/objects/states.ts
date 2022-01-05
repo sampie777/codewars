@@ -11,7 +11,7 @@ export interface GameStatePlayer {
     x: number
     y: number
     size: number
-    heading: number
+    orientation: number
 }
 
 export interface GameState extends ServerMessage {

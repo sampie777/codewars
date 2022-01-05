@@ -73,7 +73,7 @@ export class Game {
         this.player.x = state.player.x;
         this.player.y = state.player.y;
         this.player.size = state.player.size;
-        this.player.heading = state.player.heading;
+        this.player.orientation = state.player.orientation;
     }
 
     sendPlayerState() {
