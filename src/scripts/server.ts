@@ -1,6 +1,6 @@
 import config from "./config";
 import {GameState} from "./objects/states";
-import {ServerMessage, ServerMessageType} from "./objects/servermessages";
+import {ServerInformation, ServerMessage, ServerMessageType} from "./objects/servermessages";
 import game from "./game";
 import {GameConfiguration} from "./objects/gameConfiguration";
 
@@ -10,6 +10,7 @@ export class Server {
     connectionId?: number;
     lastGameState?: GameState;
     ping: number = 999;
+    serverInformation?: ServerInformation;
     private socket?: WebSocket;
     private packetSendStartTime?: Date;
 
@@ -93,6 +94,9 @@ export class Server {
             case ServerMessageType.GAME_CONFIGURATION:
                 const configuration = msg as GameConfiguration;
                 game.setConfiguration(configuration)
+                break;
+            case ServerMessageType.SERVER_INFORMATION:
+                this.serverInformation = msg as ServerInformation;
                 break;
             default:
                 console.log("[ws] Unhandled message received:", msg);

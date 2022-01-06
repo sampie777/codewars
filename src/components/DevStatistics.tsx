@@ -80,7 +80,14 @@ export default class DevStatistics extends Component<ComponentProps, ComponentSt
             connectionMessage = "connecting...";
         }
 
-        return <div className={"DevStatistics"}>
+        const serverPing = !game.server.isConnected ? undefined : <>(ping: {game.server.ping} ms)</>;
+
+        const environment = process.env.NODE_ENV === "production" ? undefined : process.env.NODE_ENV;
+        const clientVersion = <>{process.env.REACT_APP_VERSION} {environment === undefined ? undefined : <>({environment})</>}</>;
+        const serverVersion = <>{game.server.serverInformation === undefined ? "unknown" : game.server.serverInformation.version}</>;
+
+        return <div
+            className={"DevStatistics"}>
             <h4>Stats</h4>
             <p>{this.state.stepsPerSecond} step(s) per second.</p>
             <p>{this.state.framesPerSecond} frame(s) per second.</p>
@@ -95,9 +102,11 @@ export default class DevStatistics extends Component<ComponentProps, ComponentSt
                     SSL
                 </label>
                 ):&nbsp;
-                {connectionMessage} {!game.server.isConnected ? undefined : <>(ping: {game.server.ping} ms)</>}
+                {connectionMessage} {serverPing}
             </p>
             <p>Other players: {game.server.lastGameState?.players.length || 0}</p>
+            <p>Client: {clientVersion} -
+                Server: {serverVersion}</p>
         </div>;
     }
 }
