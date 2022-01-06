@@ -5,8 +5,8 @@ export interface TankProps {
     appliedForce?: number
     rotation?: number
 
-    render?: () => void
     step?: (step: number) => void
+    render?: () => void
 
     // Server provided
     x?: number

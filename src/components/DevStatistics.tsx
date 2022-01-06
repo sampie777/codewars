@@ -58,8 +58,8 @@ export default class DevStatistics extends Component<ComponentProps, ComponentSt
         this.setState({
             stepsPerSecond: game.stepCount - this.state.lastTotalSteps,
             lastTotalSteps: game.stepCount,
-            framesPerSecond: game.graphics.framesPainted - this.state.lastTotalFrames,
-            lastTotalFrames: game.graphics.framesPainted,
+            framesPerSecond: game.graphics.framesRendered - this.state.lastTotalFrames,
+            lastTotalFrames: game.graphics.framesRendered,
         });
     }
 

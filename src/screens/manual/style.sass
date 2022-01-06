@@ -1,0 +1,84 @@
+$border-radius: 6px
+
+.ManualPopup
+  position: absolute
+  height: 100%
+  width: 100%
+  background-color: #0008
+  z-index: 100
+  padding: 70px 50px
+
+  .component
+    margin: 0 auto
+    max-width: 800px
+    background-color: #2a2a2a
+    height: 800px
+    border-radius: $border-radius
+    display: flex
+    flex-direction: column
+    box-shadow: 0 3px 20px #0003
+
+    .titlebar
+      border-radius: $border-radius $border-radius 0 0
+      display: flex
+      flex-direction: row
+      background-color: #333
+
+      .title
+        padding: 20px 40px
+        flex: 1
+        font-size: 2em
+        color: #fffb
+
+      .closebutton
+        margin: 10px
+        background: none
+        border: none
+        border-radius: 50px
+        height: 60px
+        width: 60px
+        cursor: pointer
+        color: #fffa
+        font-size: 1.6em
+        font-family: Arial,Helvetica,sans-serif
+
+        &:hover
+          color: #ffff
+          background-color: #fff1
+
+    .Content
+      padding: 20px 40px 80px
+      flex: 1
+      overflow-y: auto
+      box-shadow: 0 10px 15px -10px inset #0002
+
+      & > *:first-child
+        margin-top: 30px
+
+      p
+        line-height: 1.8em
+        margin-top: 8px
+
+      code
+        background: #0003
+        padding: 2px 5px
+        border-radius: 4px
+        color: #cce8ff
+        font-size: 0.9em
+
+      h2
+        margin-top: 60px
+        padding-bottom: 10px
+        border-bottom: 1px solid #fff2
+
+      h3
+        margin-top: 40px
+
+      h4
+        margin-top: 40px
+        margin-bottom: 15px
+
+      h5
+        font-size: 1em
+        color: #fffa
+        margin-bottom: 0

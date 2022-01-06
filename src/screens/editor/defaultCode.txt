@@ -32,7 +32,7 @@ class Tank {
         window.onkeyup = (e) => {
             this.appliedForce = 0;
             this.rotation = 0;
-        }
+        };
     }
 
     render() {

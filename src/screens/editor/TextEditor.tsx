@@ -59,9 +59,7 @@ export default class TextEditor extends Component<ComponentProps, ComponentState
                 width="100%"
                 height="629px"
                 fontSize={14}
-                showPrintMargin={true}
-                showGutter={true}
-                highlightActiveLine={true}
+                showPrintMargin={false}
                 defaultValue={""}
                 setOptions={{
                     enableBasicAutocompletion: true,

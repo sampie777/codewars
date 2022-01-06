@@ -78,8 +78,7 @@ export class Game {
 
     sendPlayerState() {
         if (this.player === undefined) {
-            this.server.send({type: ServerMessageType.GAME_STATE});
-            return;
+            return this.server.send({type: ServerMessageType.GAME_STATE});
         }
 
         const state: PlayerState = {

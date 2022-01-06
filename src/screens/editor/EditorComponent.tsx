@@ -5,6 +5,7 @@ import {runUserCode} from "../../scripts/editor";
 import './style.sass';
 
 interface ComponentProps {
+    toggleManual?: () => void
 }
 
 interface ComponentState {
@@ -40,7 +41,8 @@ export default class EditorComponent extends Component<ComponentProps, Component
 
     render() {
         return <div className={"EditorComponent"}>
-            <ActionBar onRunClick={this.onRunClick}/>
+            <ActionBar onRunClick={this.onRunClick}
+                       onHelpClick={this.props.toggleManual}/>
 
             {this.state.compileError === undefined ? undefined :
                 <p>{this.state.compileError}</p>}

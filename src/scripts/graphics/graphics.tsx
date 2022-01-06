@@ -4,7 +4,7 @@ import {Renderer} from "./Renderer";
 
 export class Graphics {
     htmlElementId = "game";
-    framesPainted = 0;
+    framesRendered = 0;
     private renderer: Renderer = new TopViewCamera();
     private destroyed = false;
 
@@ -59,7 +59,7 @@ export class Graphics {
             console.error("Failed to call render() on player", e);
         }
 
-        this.framesPainted++;
+        this.framesRendered++;
         this._prepareNextStep();
     }
 }
