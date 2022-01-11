@@ -48,7 +48,7 @@ function pushAndRelease {
   RELEASE_VERSION=$(sed 's/.*"version": "\(.*\)".*/\1/;t;d' ./package.json)
   echo "Release version: ${RELEASE_VERSION}"
 
-  git add package.json || exit 1
+  git add package.json package-lock.json || exit 1
   git commit -m "version release" || exit 1
   git tag "v${RELEASE_VERSION}" || exit 1
   git push -u origin master --tags || exit 1
