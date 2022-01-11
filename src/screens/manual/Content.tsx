@@ -14,6 +14,10 @@ export default class Content extends Component<ComponentProps, ComponentState> {
             <h2>Goal</h2>
             <p><strong>Program your own battle tank and destroy all other players.</strong></p>
 
+            <p>You've got access to the main computer of your tank. This tank is still very basic, with only a GPS, a
+                gas/brake pedal, and a steering wheel. It's up to you to write code for the main computer to drive this
+                tank into battle. </p>
+
             <p>You, the player, get access to all available resources using the JavaScript code you will have to write.
                 This code will be uploaded to your tank and will be the main code for the tank. Without this code the
                 tank is useless! </p>
