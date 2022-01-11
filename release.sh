@@ -68,7 +68,7 @@ function setNextDevelopmentVersion {
   echo "Next development version: ${DEV_VERSION}"
   npm --no-git-tag-version version ${DEV_VERSION} || exit 1
 
-  git add package.json || exit 1
+  git add package.json package-lock.json || exit 1
   git commit -m "next development version" || exit 1
   git push -u origin develop --tags || exit 1
 }
