@@ -1,13 +1,17 @@
 import {Renderer} from "./Renderer";
 import game from "../game";
 import {GameStatePlayer} from "../objects/states";
-import {degToRad} from "./utils";
+import {degToRad, loadImage} from "./utils";
+import tankBlue from "../../assets/sprites/tank_blue.svg";
+import tankRed from "../../assets/sprites/tank_red.svg";
 
 export default class TopViewCamera implements Renderer {
     private width: number = 0;
     private height: number = 0;
     private canvas?: HTMLCanvasElement;
     private context: CanvasRenderingContext2D | null = null;
+    private playerSprite?: HTMLImageElement;
+    private otherPlayerSprite?: HTMLImageElement;
 
     init() {
         const gameElement = game.graphics.getHtmlElement();
@@ -22,6 +26,7 @@ export default class TopViewCamera implements Renderer {
         this.createCanvas(gameElement);
         this.createContext();
         this.clear();
+        this.loadSprites();
     }
 
     private createCanvas(parentElement: HTMLElement) {
@@ -37,6 +42,11 @@ export default class TopViewCamera implements Renderer {
         if (this.context == null) {
             console.error("Failed to create 2D context for canvas");
         }
+    }
+
+    private loadSprites() {
+        loadImage(tankBlue, (result) => this.playerSprite = result);
+        loadImage(tankRed, (result) => this.otherPlayerSprite = result);
     }
 
     step() {
@@ -62,17 +72,22 @@ export default class TopViewCamera implements Renderer {
             return;
         }
 
-        this.context!.beginPath();
-        this.context!.fillStyle = "#d44";
-        this.context!.arc(player.x || 0, player.y || 0, (player.size || 0) / 2,
-            0, 2 * Math.PI);
-        this.context!.fill();
+        if (!this.otherPlayerSprite) {
+            // In case spirte isn't loading, show something temporary
+            this.context!.beginPath();
+            this.context!.fillStyle = "#d44";
+            this.context!.arc(player.x || 0, player.y || 0, (player.size || 0) / 2,
+                0, 2 * Math.PI);
+            this.context!.fill();
+            return;
+        }
 
-        this.context!.beginPath();
-        this.context!.fillStyle = "#400";
-        this.context!.arc(player.x || 0, player.y || 0, (player.size || 0) / 2,
-            degToRad((player.orientation || 0) - 65), degToRad((player.orientation || 0) + 65));
-        this.context!.fill();
+        this.context!.save();
+        this.context!.translate(player.x || 0, player.y || 0);
+        this.context!.rotate(degToRad((player.orientation || 0)));
+        const offset = (player.size || 0) / -2;
+        this.context!.drawImage(this.otherPlayerSprite, offset, offset, player.size || 0, player.size || 0);
+        this.context!.restore();
     }
 
     paintPlayer() {
@@ -80,17 +95,22 @@ export default class TopViewCamera implements Renderer {
             return;
         }
 
-        this.context!.beginPath();
-        this.context!.fillStyle = "#0a0";
-        this.context!.arc(game.player.x || 0, game.player.y || 0, (game.player.size || 0) / 2,
-            0, 2 * Math.PI);
-        this.context!.fill();
+        if (!this.playerSprite) {
+            // In case spirte isn't loading, show something temporary
+            this.context!.beginPath();
+            this.context!.fillStyle = "#0a0";
+            this.context!.arc(game.player.x || 0, game.player.y || 0, (game.player.size || 0) / 2,
+                0, 2 * Math.PI);
+            this.context!.fill();
+            return;
+        }
 
-        this.context!.beginPath();
-        this.context!.fillStyle = "#050";
-        this.context!.arc(game.player.x || 0, game.player.y || 0, (game.player.size || 0) / 2,
-            degToRad((game.player.orientation || 0) - 65 - 90), degToRad((game.player.orientation || 0) + 65 - 90));
-        this.context!.fill();
+        this.context!.save();
+        this.context!.translate(game.player.x || 0, game.player.y || 0);
+        this.context!.rotate(degToRad((game.player.orientation || 0)));
+        const offset = (game.player.size || 0) / -2;
+        this.context!.drawImage(this.playerSprite, offset, offset, game.player.size || 0, game.player.size || 0);
+        this.context!.restore();
     }
 
     paintStatistics() {

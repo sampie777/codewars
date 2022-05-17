@@ -1,0 +1,6 @@
+Note that SVG images need to have the `width` and `height` properties defined. Like this:
+```xml
+...
+<svg viewBox="0 0 500 500" width="500" height="500">
+    ...
+```
