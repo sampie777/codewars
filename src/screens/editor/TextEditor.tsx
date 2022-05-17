@@ -57,7 +57,7 @@ export default class TextEditor extends Component<ComponentProps, ComponentState
                 theme="monokai"
                 name="AceEditor"
                 width="100%"
-                height="629px"
+                height="100%"
                 fontSize={14}
                 showPrintMargin={false}
                 defaultValue={""}

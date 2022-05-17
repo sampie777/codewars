@@ -1,6 +1,15 @@
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import React, {Component} from 'react';
 import game from "../scripts/game";
 import './DevStatistics.sass';
+import {
+    faArrowsRotate,
+    faChartColumn,
+    faDisplay,
+    faNetworkWired,
+    faServer, faShoePrints, faTowerBroadcast,
+    faUsers, faVideo
+} from "@fortawesome/free-solid-svg-icons";
 
 interface ComponentProps {
 }
@@ -10,6 +19,7 @@ interface ComponentState {
     lastTotalSteps: number
     framesPerSecond: number
     lastTotalFrames: number
+    hideStats: boolean
 }
 
 export default class DevStatistics extends Component<ComponentProps, ComponentState> {
@@ -25,11 +35,13 @@ export default class DevStatistics extends Component<ComponentProps, ComponentSt
             lastTotalSteps: 0,
             framesPerSecond: 0,
             lastTotalFrames: 0,
+            hideStats: true,
         };
 
         this.startTimer = this.startTimer.bind(this);
         this.clearTimer = this.clearTimer.bind(this);
         this.checkTimer = this.checkTimer.bind(this);
+        this.toggleHideStats = this.toggleHideStats.bind(this);
     }
 
     componentDidMount() {
@@ -60,39 +72,54 @@ export default class DevStatistics extends Component<ComponentProps, ComponentSt
         });
     }
 
+    toggleHideStats() {
+        this.setState({
+            hideStats: !this.state.hideStats
+        })
+    }
+
     render() {
-        let connectionMessage = "disconnected";
+        let connectionMessage = "Disconnected";
         if (game.server.isConnected) {
-            connectionMessage = "connected with ID: " + game.server.connectionId;
+            connectionMessage = "Connected; ID: " + game.server.connectionId;
         } else if (game.server.isConnecting) {
-            connectionMessage = "connecting...";
+            connectionMessage = "Connecting...";
         }
 
-        if (game.server.isConnecting) {
+        if (game.server.isConnected) {
+            document.title = this.documentInitialTitle;
+        } else if (game.server.isConnecting) {
             document.title = this.documentInitialTitle + " (connecting...)";
-        } else if (!game.server.isConnected) {
+        } else {
             document.title = this.documentInitialTitle + " (disconnected)";
         }
 
-        const serverPing = !game.server.isConnected ? undefined : <>(ping: {game.server.ping} ms)</>;
+        const serverPing = !game.server.isConnected ? undefined : <>(<FontAwesomeIcon icon={faTowerBroadcast}
+                                                                                      fixedWidth/> ping: {game.server.ping} ms)</>;
 
         const environment = process.env.NODE_ENV === "production" ? undefined : process.env.NODE_ENV;
         const clientVersion = <>{process.env.REACT_APP_VERSION} {environment === undefined ? undefined : <>({environment})</>}</>;
         const serverVersion = <>{game.server.serverInformation === undefined ? "unknown" : game.server.serverInformation.version}</>;
 
-        return <div
-            className={"DevStatistics"}>
-            <h4>Stats</h4>
-            <p>{this.state.stepsPerSecond} step(s) per second.</p>
-            <p>{this.state.framesPerSecond} frame(s) per second.</p>
-            <p>Code iteration: {game.playerIteration}</p>
-            <p>
-                Websocket&nbsp;
-                {connectionMessage} {serverPing}
-            </p>
-            <p>Other players: {game.server.lastGameState?.players.length || 0}</p>
-            <p>Client: {clientVersion} -
-                Server: {serverVersion}</p>
+        return <div className={"DevStatistics"}>
+            <h4>
+                <FontAwesomeIcon icon={faChartColumn} fixedWidth/>&nbsp;
+                Stats&nbsp;
+                <button className={"url"}
+                        onClick={this.toggleHideStats}>
+                    {this.state.hideStats ? "(show)" : "(hide)"}
+                </button>
+            </h4>
+            {this.state.hideStats ? undefined : <div className={"stats"}>
+                <p><FontAwesomeIcon icon={faShoePrints} fixedWidth/> {this.state.stepsPerSecond} step(s) per second</p>
+                <p><FontAwesomeIcon icon={faVideo} fixedWidth/> {this.state.framesPerSecond} frame(s) per second</p>
+                <p><FontAwesomeIcon icon={faArrowsRotate} fixedWidth/> Code iteration: {game.playerIteration}</p>
+                <p><FontAwesomeIcon icon={faNetworkWired} fixedWidth/> {connectionMessage} {serverPing}</p>
+                <p><FontAwesomeIcon icon={faUsers} fixedWidth/> Other
+                    players: {game.server.lastGameState?.players.length || 0}</p>
+                <p><FontAwesomeIcon icon={faDisplay} fixedWidth/> Client: {clientVersion}</p>
+                <p><FontAwesomeIcon icon={faServer} fixedWidth/> Server: {serverVersion}</p>
+            </div>}
         </div>;
     }
 }

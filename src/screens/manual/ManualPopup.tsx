@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import "./style.sass"
 import Content from "./Content";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faXmark} from "@fortawesome/free-solid-svg-icons";
 
 interface ComponentProps {
     show: boolean
@@ -88,7 +90,8 @@ export default class ManualPopup extends Component<ComponentProps, ComponentStat
                 <div className={"titlebar"}>
                     <div className={"title"}>Manual</div>
                     <button className={"closebutton"}
-                            onClick={this.props.onClose}>X
+                            onClick={this.props.onClose}>
+                        <FontAwesomeIcon icon={faXmark} />
                     </button>
                 </div>
                 <Content />
