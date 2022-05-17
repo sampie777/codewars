@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import game from "../scripts/game";
 import './DevStatistics.sass';
-import config from "../scripts/config";
 
 interface ComponentProps {
 }
@@ -11,12 +10,12 @@ interface ComponentState {
     lastTotalSteps: number
     framesPerSecond: number
     lastTotalFrames: number
-    useSecureConnection: boolean
 }
 
 export default class DevStatistics extends Component<ComponentProps, ComponentState> {
 
-    fpsTimer?: number;
+    private fpsTimer?: number;
+    private documentInitialTitle: string = document.title;
 
     constructor(props: ComponentProps) {
         super(props);
@@ -26,13 +25,11 @@ export default class DevStatistics extends Component<ComponentProps, ComponentSt
             lastTotalSteps: 0,
             framesPerSecond: 0,
             lastTotalFrames: 0,
-            useSecureConnection: config.serverUseSecureConnection,
         };
 
         this.startTimer = this.startTimer.bind(this);
         this.clearTimer = this.clearTimer.bind(this);
         this.checkTimer = this.checkTimer.bind(this);
-        this.toggleSecureConnection = this.toggleSecureConnection.bind(this);
     }
 
     componentDidMount() {
@@ -63,21 +60,18 @@ export default class DevStatistics extends Component<ComponentProps, ComponentSt
         });
     }
 
-    toggleSecureConnection(e: React.ChangeEvent<HTMLInputElement>) {
-        this.setState({
-            useSecureConnection: e.target.checked
-        }, () => {
-            config.serverUseSecureConnection = this.state.useSecureConnection;
-            game.server.reconnect();
-        });
-    }
-
     render() {
         let connectionMessage = "disconnected";
         if (game.server.isConnected) {
             connectionMessage = "connected with ID: " + game.server.connectionId;
         } else if (game.server.isConnecting) {
             connectionMessage = "connecting...";
+        }
+
+        if (game.server.isConnecting) {
+            document.title = this.documentInitialTitle + " (connecting...)";
+        } else if (!game.server.isConnected) {
+            document.title = this.documentInitialTitle + " (disconnected)";
         }
 
         const serverPing = !game.server.isConnected ? undefined : <>(ping: {game.server.ping} ms)</>;
@@ -94,14 +88,6 @@ export default class DevStatistics extends Component<ComponentProps, ComponentSt
             <p>Code iteration: {game.playerIteration}</p>
             <p>
                 Websocket&nbsp;
-                (
-                <label>
-                    <input type={"checkbox"}
-                           onChange={this.toggleSecureConnection}
-                           checked={this.state.useSecureConnection}/>
-                    SSL
-                </label>
-                ):&nbsp;
                 {connectionMessage} {serverPing}
             </p>
             <p>Other players: {game.server.lastGameState?.players.length || 0}</p>
