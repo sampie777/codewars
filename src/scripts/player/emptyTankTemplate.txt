@@ -1,0 +1,21 @@
+class Tank {
+    constructor(game, previousTank) {
+        // These values will be set/updated by the server
+        this.x = 0;
+        this.y = 0;
+        this.size = 0;
+        this.orientation = 0;
+
+        // These values must be updated by you, which will be sent to the server
+        this.appliedForce = previousTank.appliedForce;
+        this.rotation = previousTank.rotation;
+    }
+
+    step(step) {
+
+    }
+
+    render(canvas) {
+
+    }
+}

@@ -7,6 +7,8 @@ import ActionBar from "../../components/ActionBar";
 interface ComponentProps {
     toggleManual?: () => void
     runCode?: () => void
+    onNewCodeClick?: () => void
+    onDefaultCodeClick?: () => void
 }
 
 interface ComponentState {
@@ -26,7 +28,9 @@ export default class GameField extends Component<ComponentProps, ComponentState>
                  id={game.graphics.htmlElementId}
                  tabIndex={0}/>
             <ActionBar onRunClick={this.props.runCode}
-                       onHelpClick={this.props.toggleManual}/>
+                       onHelpClick={this.props.toggleManual}
+                       onNewCodeClick={this.props.onNewCodeClick}
+                       onDefaultCodeClick={this.props.onDefaultCodeClick}/>
             <DevStatistics/>
         </div>;
     }

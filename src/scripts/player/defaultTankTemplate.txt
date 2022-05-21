@@ -10,11 +10,11 @@ class Tank {
         this.size = 0;
         this.orientation = 0;
 
-        // Custom code from here...
-
         // These values must be updated by you, which will be sent to the server
         this.appliedForce = previousTank.appliedForce;
         this.rotation = previousTank.rotation;
+
+        // Custom code from here...
 
         // These values are for our custom getVelocity() function
         this.lastXBuffer = previousTank.lastXBuffer || 0;

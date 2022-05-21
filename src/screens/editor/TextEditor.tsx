@@ -9,7 +9,9 @@ import "ace-builds/src-noconflict/ext-spellcheck";
 import "ace-builds/src-noconflict/ext-error_marker";
 import Beautify from 'ace-builds/src-noconflict/ext-beautify';
 // @ts-ignore
-import defaultCodeFile from '../../scripts/player/defaultCode.txt';
+import defaultTankTemplate from '../../scripts/player/defaultTankTemplate.txt';
+// @ts-ignore
+import emptyTankTemplate from '../../scripts/player/emptyTankTemplate.txt';
 
 interface ComponentProps {
 }
@@ -27,10 +29,21 @@ export default class TextEditor extends Component<ComponentProps, ComponentState
         this.textAreaRef = React.createRef();
 
         this.state = {};
+
+        this.setNewCode = this.setNewCode.bind(this);
+        this.setDefaultCode = this.setDefaultCode.bind(this);
     }
 
     componentDidMount() {
-        fetch(defaultCodeFile)
+        this.setDefaultCode();
+    }
+
+    getText() {
+        return this.textAreaRef.current?.editor.getValue() || "";
+    }
+
+    setNewCode() {
+        fetch(emptyTankTemplate)
             .then(r => r.text())
             .then(text => {
                 this.textAreaRef.current?.editor.setValue(text);
@@ -38,8 +51,13 @@ export default class TextEditor extends Component<ComponentProps, ComponentState
             });
     }
 
-    getText() {
-        return this.textAreaRef.current?.editor.getValue() || "";
+    setDefaultCode() {
+        fetch(defaultTankTemplate)
+            .then(r => r.text())
+            .then(text => {
+                this.textAreaRef.current?.editor.setValue(text);
+                this.textAreaRef.current?.editor.clearSelection();
+            });
     }
 
     private cancelKeyEventsPropagation(e: React.KeyboardEvent) {

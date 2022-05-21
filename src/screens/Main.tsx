@@ -32,6 +32,8 @@ export default class Main extends Component<ComponentProps, ComponentState> {
         this.closeManual = this.closeManual.bind(this);
         this.runCode = this.runCode.bind(this);
         this.showError = this.showError.bind(this);
+        this.onNewCodeClick = this.onNewCodeClick.bind(this);
+        this.onDefaultCodeClick = this.onDefaultCodeClick.bind(this);
     }
 
     showManual() {
@@ -58,6 +60,14 @@ export default class Main extends Component<ComponentProps, ComponentState> {
         });
     }
 
+    onNewCodeClick() {
+        this.textEditorRef.current?.setNewCode();
+    }
+
+    onDefaultCodeClick() {
+        this.textEditorRef.current?.setDefaultCode();
+    }
+
     render() {
         return <div className={"Main wrapper"}>
             <PageTitle/>
@@ -67,7 +77,9 @@ export default class Main extends Component<ComponentProps, ComponentState> {
                                  textEditorRef={this.textEditorRef}
                                  compileError={this.state.compileError}/>
                 <GameField runCode={this.runCode}
-                           toggleManual={this.showManual}/>
+                           toggleManual={this.showManual}
+                           onNewCodeClick={this.onNewCodeClick}
+                           onDefaultCodeClick={this.onDefaultCodeClick}/>
             </div>
 
             <ManualPopup show={this.state.showManual}
