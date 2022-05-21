@@ -1,4 +1,4 @@
-import {EmptyTank, TankProps} from "./tank";
+import {EmptyTank, TankProps} from "./player/tank";
 import config from "./config";
 import {Graphics} from "./graphics/graphics";
 import {Server} from "./server";

@@ -1,6 +1,7 @@
 import game from "../game";
 import TopViewCamera from "./TopViewCamera";
 import {Renderer} from "./Renderer";
+import {TankCanvas} from "../player/TankCanvas";
 
 export class Graphics {
     htmlElementId = "game";
@@ -53,8 +54,20 @@ export class Graphics {
             console.error("Failed to call render() on renderer", e);
         }
 
+        let tankCanvas: TankCanvas = {
+            context: null,
+            htmlElement: null,
+            width: 0,
+            height: 0,
+        };
         try {
-            game.player?.render?.();
+            tankCanvas = this.renderer.getTankCanvas();
+        } catch (e) {
+            console.error("Failed to get tank canvas from renderer", e);
+        }
+
+        try {
+            game.player?.render?.(tankCanvas);
         } catch (e) {
             console.error("Failed to call render() on player", e);
         }

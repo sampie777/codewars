@@ -47,21 +47,21 @@ export default class Content extends Component<ComponentProps, ComponentState> {
 
             <ReadOnlyEditor
                 value={"interface TankInterface {\n" +
-                "    constructor: (game: Game, previousTank?: TankProps) => void\n" +
-                "\n" +
-                "    // User provided\n" +
-                "    appliedForce?: number\n" +
-                "    rotation?: number\n" +
-                "\n" +
-                "    step?: (step: number) => void\n" +
-                "    render?: () => void\n" +
-                "\n" +
-                "    // Server provided\n" +
-                "    x?: number\n" +
-                "    y?: number\n" +
-                "    size?: number\n" +
-                "    orientation?: number\n" +
-                "}"}
+                    "    constructor: (game: Game, previousTank?: TankProps) => void\n" +
+                    "\n" +
+                    "    // User provided\n" +
+                    "    appliedForce?: number\n" +
+                    "    rotation?: number\n" +
+                    "\n" +
+                    "    step?: (step: number) => void\n" +
+                    "    render?: (canvas: Canvas) => void\n" +
+                    "\n" +
+                    "    // Server provided\n" +
+                    "    x?: number\n" +
+                    "    y?: number\n" +
+                    "    size?: number\n" +
+                    "    orientation?: number\n" +
+                    "}"}
             />
 
             <h5>constructor</h5>
@@ -102,6 +102,17 @@ export default class Content extends Component<ComponentProps, ComponentState> {
                 time this is done 60 times per second). This method isn't called at the same cycle as
                 the <code>step</code> method, as you may want to render explosions or such which benefit from higher
                 FPS.</p>
+            <p>The render function is called with a <code>canvas</code> parameter. This parameter is of the
+                type <code>Canvas</code> which follows the following interface:</p>
+
+            <ReadOnlyEditor
+                value={"interface Canvas {\n" +
+                    "    context: CanvasRenderingContext2D | null\n" +
+                    "    htmlElement: HTMLCanvasElement | null\n" +
+                    "    width: number\n" +
+                    "    height: number\n" +
+                    "}"}
+            />
 
             <h5>x and y</h5>
             <p>These (and the next few) properties are set by the server and you may change them, but you will influence
@@ -130,16 +141,16 @@ export default class Content extends Component<ComponentProps, ComponentState> {
 
             <ReadOnlyEditor
                 value={"interface GameInterface {\n" +
-                "    configuration: GameConfiguration\n" +
-                "    graphics: Graphics\n" +
-                "    server: Server\n" +
-                "\n" +
-                "    stepCount: number\n" +
-                "    playerIteration: number\n" +
-                "    player: TankProps\n" +
-                "\n" +
-                "    setConfiguration: (configuration: GameConfiguration) => void\n" +
-                "}"}
+                    "    configuration: GameConfiguration\n" +
+                    "    graphics: Graphics\n" +
+                    "    server: Server\n" +
+                    "\n" +
+                    "    stepCount: number\n" +
+                    "    playerIteration: number\n" +
+                    "    player: TankProps\n" +
+                    "\n" +
+                    "    setConfiguration: (configuration: GameConfiguration) => void\n" +
+                    "}"}
             />
 
             <h5>configuration</h5>
@@ -147,9 +158,9 @@ export default class Content extends Component<ComponentProps, ComponentState> {
                 This <code>GameConfiguration</code> class is described by the following: </p>
 
             <ReadOnlyEditor value={"interface GameConfigurationInterface {\n" +
-            "    mapWidth: number\n" +
-            "    mapHeight: number\n" +
-            "}"}/>
+                "    mapWidth: number\n" +
+                "    mapHeight: number\n" +
+                "}"}/>
 
             <h5>graphics</h5>
             <p>The <object>Graphics</object> engine to use for rendering and handling all the client's graphics. See
@@ -199,11 +210,11 @@ export default class Content extends Component<ComponentProps, ComponentState> {
 
             <ReadOnlyEditor
                 value={"interface GraphicsInterface {\n" +
-                "    htmlElementId: string\n" +
-                "    framesRendered: number\n" +
-                "\n" +
-                "    getHtmlElement(): HTMLElement | null\n" +
-                "}"}
+                    "    htmlElementId: string\n" +
+                    "    framesRendered: number\n" +
+                    "\n" +
+                    "    getHtmlElement(): HTMLElement | null\n" +
+                    "}"}
             />
 
             <h5>htmlElementId</h5>

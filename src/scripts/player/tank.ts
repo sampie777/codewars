@@ -1,3 +1,5 @@
+import {TankCanvas} from "./TankCanvas";
+
 export interface TankProps {
     // constructor: (game: Game, previousTank?: TankProps) => any
 
@@ -6,7 +8,7 @@ export interface TankProps {
     rotation?: number
 
     step?: (step: number) => void
-    render?: () => void
+    render?: (canvas: TankCanvas) => void
 
     // Server provided
     x?: number

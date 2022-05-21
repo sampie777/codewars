@@ -1,4 +1,4 @@
-import {TankProps} from "./tank";
+import {TankProps} from "./player/tank";
 import game from "./game";
 
 export const runUserCode = (script: string): string | undefined => {

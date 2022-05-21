@@ -4,50 +4,74 @@ class Tank {
         // The previous object is passed through the constructor as `previousTank`
         // so you can save/copy the values you want to persist.
 
-        // These values must be updated by you, which will be sent to the server
-        this.appliedForce = previousTank.appliedForce;
-        this.rotation = previousTank.rotation;
-        this.lastXBuffer = previousTank.lastXBuffer || 0;
-        this.lastYBuffer = previousTank.lastYBuffer || 0;
-        this.lastX = previousTank.lastX || 0;
-        this.lastY = previousTank.lastY || 0;
-
-        // These values will be updated by the server
+        // These values will be set/updated by the server
         this.x = 0;
         this.y = 0;
         this.size = 0;
         this.orientation = 0;
 
+        // Custom code from here...
+
+        // These values must be updated by you, which will be sent to the server
+        this.appliedForce = previousTank.appliedForce;
+        this.rotation = previousTank.rotation;
+
+        // These values are for our custom getVelocity() function
+        this.lastXBuffer = previousTank.lastXBuffer || 0;
+        this.lastYBuffer = previousTank.lastYBuffer || 0;
+        this.lastX = previousTank.lastX || 0;
+        this.lastY = previousTank.lastY || 0;
+
+        // Let's register a callback function which listen to key presses
         window.onkeydown = (e) => {
             if (e.code == "ArrowUp") {
+                // Accelerate forward with a force of 1000 Newton
                 this.appliedForce = 1000;
             } else if (e.code == "ArrowDown") {
+                // Accelerate backward with a force of 1000 Newton
                 this.appliedForce = -1000;
             } else if (e.code == "ArrowLeft") {
+                // Turn 10 degrees to the left
                 this.rotation = -10;
             } else if (e.code == "ArrowRight") {
+                // Turn 10 degrees to the right
                 this.rotation = 10;
             }
         };
+        // Remember to register a callback for when the keys are released
         window.onkeyup = (e) => {
             this.appliedForce = 0;
             this.rotation = 0;
         };
     }
 
-    render() {
-        // Render your own GUI here
-    }
-
     step(step) {
-        // Determine new acceleration and rotation values here
+        // This is like the loop() function where we can update values on each game step
+        // Like setting new acceleration and rotation values or other things we want to do
+
+        // For now, just update our values, so we can keep track of our speed
         this.lastX = this.lastXBuffer;
         this.lastY = this.lastYBuffer;
         this.lastXBuffer = this.x;
         this.lastYBuffer = this.y;
     }
 
+    render(canvas) {
+        // Here we can render our own GUI. A default renderer is already active, but we get full
+        // control to the canvas to create our own game map
+
+        // Let's display our velocity on the canvas
+        canvas.context.beginPath();
+        canvas.context.strokeStyle = "#fff";
+        canvas.context.font = "14px monospace";
+        canvas.context.textBaseline = "top";
+        canvas.context.textAlign = "left";
+        const velocity = this.getVelocity().toFixed(1);  // Round velocity to 1 decimal place
+        canvas.context.strokeText("Velocity: " + velocity, canvas.width - 150, 10);
+    }
+
     getVelocity() {
+        // Our custom function to calculate the velocity
         const velocityVector = [0, 0];
         velocityVector[0] = this.x - this.lastX;
         velocityVector[1] = this.y - this.lastY;

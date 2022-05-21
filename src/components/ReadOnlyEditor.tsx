@@ -20,7 +20,7 @@ export default class ReadOnlyEditor extends Component<ComponentProps, ComponentS
     render() {
         let height = this.props.height || "auto";
         if (height === "auto") {
-            height = Math.ceil(this.props.value.split("\n").length * 16.25) + "px";
+            height = Math.ceil(this.props.value.split("\n").length * 17.0) + "px";
         }
 
         return <AceEditor

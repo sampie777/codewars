@@ -9,7 +9,7 @@ import "ace-builds/src-noconflict/ext-spellcheck";
 import "ace-builds/src-noconflict/ext-error_marker";
 import Beautify from 'ace-builds/src-noconflict/ext-beautify';
 // @ts-ignore
-import defaultCodeFile from './defaultCode.txt';
+import defaultCodeFile from '../../scripts/player/defaultCode.txt';
 
 interface ComponentProps {
 }

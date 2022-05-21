@@ -4,6 +4,7 @@ import {GameStatePlayer} from "../objects/states";
 import {degToRad, loadImage} from "./utils";
 import tankBlue from "../../assets/sprites/tank_blue.svg";
 import tankRed from "../../assets/sprites/tank_red.svg";
+import {TankCanvas} from "../player/TankCanvas";
 
 export default class TopViewCamera implements Renderer {
     private width: number = 0;
@@ -55,11 +56,19 @@ export default class TopViewCamera implements Renderer {
         }
         this.clear();
         this.paintPlayers();
-        this.paintStatistics();
     }
 
     clear() {
         this.context!.clearRect(0, 0, this.width, this.height);
+    }
+
+    getTankCanvas(): TankCanvas {
+        return {
+            context: this.context,
+            htmlElement: this.canvas || null,
+            width: this.width,
+            height: this.height,
+        }
     }
 
     paintPlayers() {
@@ -111,19 +120,5 @@ export default class TopViewCamera implements Renderer {
         const offset = (game.player.size || 0) / -2;
         this.context!.drawImage(this.playerSprite, offset, offset, game.player.size || 0, game.player.size || 0);
         this.context!.restore();
-    }
-
-    paintStatistics() {
-        try {
-            this.context!.beginPath();
-            this.context!.strokeStyle = "#fff";
-            this.context!.font = "14px monospace";
-            this.context!.textBaseline = "top";
-            this.context!.textAlign = "left";
-            // @ts-ignore
-            const velocity = game.player.getVelocity();
-            this.context!.strokeText("Velocity: " + Math.round(velocity * 10) / 10, this.width - 150, 10);
-        } catch (e) {
-        }
     }
 }
