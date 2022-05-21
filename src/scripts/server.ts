@@ -38,14 +38,14 @@ export class Server {
         }
         this.socket.onclose = (e) => {
             if (this.isConnected || this.isConnecting) {
-                console.log("[ws] Socket closed", e);
+                console.debug("[ws] Socket closed", e);
             }
             this.isConnected = false;
             this.isConnecting = false;
             this.socket = undefined;
         }
         this.socket.onopen = () => {
-            console.log("[ws] Socket opened");
+            console.debug("[ws] Socket opened");
             this.isConnected = true;
             this.isConnecting = false;
 
@@ -99,7 +99,7 @@ export class Server {
                 this.serverInformation = msg as ServerInformation;
                 break;
             default:
-                console.log("[ws] Unhandled message received:", msg);
+                console.debug("[ws] Unhandled message received:", msg);
         }
     }
 
