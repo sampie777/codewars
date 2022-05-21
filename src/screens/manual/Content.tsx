@@ -89,16 +89,17 @@ export default class Content extends Component<ComponentProps, ComponentState> {
                 the new information. </p>
 
             <h5>step</h5>
-            <p>Everytime the game recalculates all tanks their states, a step is taken. This <code>step</code> method
+            <p>Everytime the game recalculates all tanks their states, a step is taken. This <code>step()</code> method
                 will be called on every game step. You may expect to have the latest game/state information stored in
-                your tank's properties (x, y, ...). You use this <code>step</code> method to set new values
+                your tank's properties (x, y, ...). You use this <code>step()</code> method to set new values
                 to <code>appliedForce</code> and <code>rotation</code>, which will be send to the server after
-                completion of the step. So basically, all control logic will be done in this <code>step</code> method.
+                completion of the step. So basically, all control logic will be done in this <code>step()</code> method.
             </p>
+            <p>The argument of the <code>step()</code> method is the step count from the game's start.</p>
 
             <h5>render</h5>
             <p>To modify the GUI or create your own, you most probably need to render it. This can be done inside this
-                method. The <code>render</code> method will be called during each graphics render cycle (most of the
+                method. The <code>render()</code> method will be called during each graphics render cycle (most of the
                 time this is done 60 times per second). This method isn't called at the same cycle as
                 the <code>step</code> method, as you may want to render explosions or such which benefit from higher
                 FPS.</p>
@@ -133,7 +134,7 @@ export default class Content extends Component<ComponentProps, ComponentState> {
             <p>The whole client side is controlled by the <code>Game</code> object. This object is passed to
                 the <code>Tank</code> class through its constructor. It is up to you to save
                 this <code>game</code> object for later use inside one of
-                your <code>step</code> or <code>render</code> methods. It's not recommended to change any of
+                your <code>step()</code> or <code>render()</code> methods. It's not recommended to change any of
                 the <code>game</code> object's properties. But for the interested, most properties are listed below.</p>
 
             <h4>Interface</h4>
@@ -239,7 +240,7 @@ export default class Content extends Component<ComponentProps, ComponentState> {
             <p>When you think your code is ready or you just want to test it, you can upload your code to the tank by
                 pressing "Run". If your <code>Tank</code> class fails to initialize, the error will be displayed and the
                 code won't be uploaded to the tank. When you've uploaded code which throws errors inside its other
-                methods, like the <code>step</code> method, the errors won't be shown (yet) and your tank will probably
+                methods, like the <code>step()</code> method, the errors won't be shown (yet) and your tank will probably
                 do nothing. However, most errors are visible in your browsers console (Ctrl+Shift+I for most modern
                 browsers). </p>
 

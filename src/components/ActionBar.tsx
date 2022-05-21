@@ -25,16 +25,16 @@ export default class ActionBar extends Component<ComponentProps, ComponentState>
     render() {
         return <div className={"ActionBar"}>
             <button onClick={this.props.onNewCodeClick}
-                    title={"Start with a blank Tank template"}>
+                    title={"Load empty Tank template"}>
                 <FontAwesomeIcon icon={faFile} fixedWidth/>
             </button>
             <button onClick={this.props.onDefaultCodeClick}
-                    title={"Start with the default Tank template"}>
+                    title={"Load default Tank template"}>
                 <FontAwesomeIcon icon={faFileLines} fixedWidth/>
             </button>
             <button onClick={this.props.onRunClick}
                     className={"run"}
-                    title={"Upload the new code to your tank"}>
+                    title={"Upload code to your tank"}>
                 <FontAwesomeIcon icon={faPlay} fixedWidth/>
             </button>
             <button onClick={this.props.onHelpClick}
