@@ -11,8 +11,7 @@ class Tank {
         this.orientation = 0;
 
         // These values must be updated by you, which will be sent to the server
-        this.appliedForce = previousTank.appliedForce;
-        this.rotation = previousTank.rotation;
+        this.appliedForce = previousTank.appliedForce;  // A number array: [0, 0]
 
         // Custom code from here...
 
@@ -25,29 +24,28 @@ class Tank {
         // Let's register a callback function which listen to key presses
         window.onkeydown = (e) => {
             if (e.code == "ArrowUp") {
-                // Accelerate forward with a force of 1000 Newton
-                this.appliedForce = 1000;
+                // Accelerate forward with a force of 100k Newton
+                this.appliedForce = [100000, 100000];
             } else if (e.code == "ArrowDown") {
-                // Accelerate backward with a force of 1000 Newton
-                this.appliedForce = -1000;
+                // Accelerate backward with a force of 10k Newton
+              this.appliedForce = [-100000, -100000];
             } else if (e.code == "ArrowLeft") {
                 // Turn 10 degrees to the left
-                this.rotation = -10;
+              this.appliedForce = [-100000, 100000];
             } else if (e.code == "ArrowRight") {
                 // Turn 10 degrees to the right
-                this.rotation = 10;
+              this.appliedForce = [100000, -100000];
             }
         };
         // Remember to register a callback for when the keys are released
         window.onkeyup = (e) => {
-            this.appliedForce = 0;
-            this.rotation = 0;
+            this.appliedForce = [0, 0];
         };
     }
 
     step(step) {
         // This is like the loop() function where we can update values on each game step
-        // Like setting new acceleration and rotation values or other things we want to do
+        // Like setting new acceleration values or other things we want to do
 
         // For now, just update our values, so we can keep track of our speed
         this.lastX = this.lastXBuffer;

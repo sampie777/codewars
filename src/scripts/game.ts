@@ -74,6 +74,10 @@ export class Game {
         this.player.y = state.player.y;
         this.player.size = state.player.size;
         this.player.orientation = state.player.orientation;
+
+        this.player.hull = state.player.hull;
+        this.player.leftTrack = state.player.leftTrack;
+        this.player.rightTrack = state.player.rightTrack;
     }
 
     sendPlayerState() {
@@ -83,8 +87,7 @@ export class Game {
 
         const state: PlayerState = {
             type: ServerMessageType.PLAYER_STATE,
-            appliedForce: this.player.appliedForce,
-            rotation: this.player.rotation,
+            appliedForce: [...(this.player.appliedForce ?? [0, 0])],
         }
 
         this.server.send(state);

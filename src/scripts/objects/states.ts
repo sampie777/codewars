@@ -1,8 +1,7 @@
 import {ServerMessage} from "./servermessages";
 
 export interface PlayerState extends ServerMessage {
-    appliedForce?: number
-    rotation?: number
+    appliedForce?: number[]
 }
 
 export interface GameStatePlayer {
@@ -12,6 +11,24 @@ export interface GameStatePlayer {
     y: number
     size: number
     orientation: number
+  hull?: {
+    x: number
+    y: number
+    angle: number
+    vertices: {x: number, y: number}[]
+  }
+  leftTrack?: {
+    x: number
+    y: number
+    angle: number
+    vertices: {x: number, y: number}[]
+  }
+  rightTrack?: {
+    x: number
+    y: number
+    angle: number
+    vertices: {x: number, y: number}[]
+  }
 }
 
 export interface GameState extends ServerMessage {

@@ -4,7 +4,7 @@ export interface TankProps {
     // constructor: (game: Game, previousTank?: TankProps) => any
 
     // User provided
-    appliedForce?: number
+    appliedForce?: number[]
     rotation?: number
 
     step?: (step: number) => void
@@ -15,10 +15,28 @@ export interface TankProps {
     y?: number
     size?: number
     orientation?: number
+  hull?: {
+    x: number
+    y: number
+    angle: number
+    vertices: {x: number, y: number}[]
+  }
+  leftTrack?: {
+    x: number
+    y: number
+    angle: number
+    vertices: {x: number, y: number}[]
+  }
+  rightTrack?: {
+    x: number
+    y: number
+    angle: number
+    vertices: {x: number, y: number}[]
+  }
 }
 
 export class EmptyTank implements TankProps {
-    appliedForce = 0;
+    appliedForce = [0, 0];
     rotation = 0;
     x = 0
     y = 0
