@@ -11,6 +11,7 @@ class Tank {
         this.orientation = 0;
 
         // These values must be updated by you, which will be sent to the server
+        // Remember, a tank weight about 40.000 kg and needs at minium 40000 * 9.81 * 0.7 (friction of ashpalt) = 274,680 Newton to start moving
         this.appliedForce = previousTank.appliedForce;  // A number array: [0, 0]
 
         // Custom code from here...
@@ -23,18 +24,19 @@ class Tank {
 
         // Let's register a callback function which listen to key presses
         window.onkeydown = (e) => {
+            const maxForce = 7000000;
             if (e.code == "ArrowUp") {
                 // Accelerate forward with a force of 100k Newton
-                this.appliedForce = [100000, 100000];
+                this.appliedForce = [maxForce, maxForce];
             } else if (e.code == "ArrowDown") {
                 // Accelerate backward with a force of 10k Newton
-              this.appliedForce = [-100000, -100000];
+              this.appliedForce = [-maxForce, -maxForce];
             } else if (e.code == "ArrowLeft") {
                 // Turn 10 degrees to the left
-              this.appliedForce = [-100000, 100000];
+              this.appliedForce = [-maxForce, maxForce];
             } else if (e.code == "ArrowRight") {
                 // Turn 10 degrees to the right
-              this.appliedForce = [100000, -100000];
+              this.appliedForce = [maxForce, -maxForce];
             }
         };
         // Remember to register a callback for when the keys are released
