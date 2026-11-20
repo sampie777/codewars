@@ -1,21 +1,19 @@
 # Docker file, thanks to: https://dzone.com/articles/how-to-dockerize-reactjs-app
 # Build stage
-FROM node:lts-alpine3.13 as build-step
+FROM node:22-alpine3.23 AS build
+
+RUN corepack enable
 
 RUN mkdir /app
 WORKDIR /app
 
-#ENV PATH /app/node_modules/.bin:$PATH
+COPY . .
 
 # install app dependencies
-COPY package.json /app
-COPY yarn.lock /app
 RUN yarn install
 
-# add app
-COPY . /app
-
 # build app
+ENV NODE_ENV=production
 RUN yarn build
 
 # Package stage
@@ -24,6 +22,6 @@ FROM nginx:1.31-alpine
 # nginx configuration
 COPY docker/nginx/default.conf /etc/nginx/conf.d/default.conf
 
-COPY --from=build-step /app/build /usr/share/nginx/html
-
+COPY --from=build /app/build /usr/share/nginx/html
+EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
