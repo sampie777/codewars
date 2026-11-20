@@ -25,3 +25,4 @@ yarn-error.log*
 .idea/
 *.iml
 install-state.gz
+skills/
